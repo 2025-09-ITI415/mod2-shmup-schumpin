@@ -5,7 +5,7 @@ using UnityEngine;
 public class Shield : MonoBehaviour
 {
     [Header("Inscribed")]
-    public float rotationsPerSecond = 0.1f;
+    public float rotationsPerSecond = 100.0f;
 
     [Header("Dynamic")]
     public int levelShown = 0; // This is set between lines // c & d
