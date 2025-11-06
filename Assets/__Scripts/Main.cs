@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;   // Enables the loading & reloading of scenes
+using UnityEngine.UI;
 
 [RequireComponent(typeof(BoundsCheck))]
 public class Main : MonoBehaviour
@@ -18,10 +19,13 @@ public class Main : MonoBehaviour
     public float gameRestartDelay = 2.0f;
     public GameObject prefabPowerUp;
     public WeaponDefinition[] weaponDefinitions;
-    public eWeaponType[] powerUpFrequency = new eWeaponType[] {        
+    public eWeaponType[] powerUpFrequency = new eWeaponType[] {
                                      eWeaponType.blaster, eWeaponType.blaster,
                                      eWeaponType.spread,  eWeaponType.shield };
     private BoundsCheck bndCheck;
+    public Text scoreText; // Assign in Inspector
+    private int score = 0; // current score
+
 
     void Awake()
     {
@@ -118,6 +122,8 @@ public class Main : MonoBehaviour
     static public void SHIP_DESTROYED(Enemy e)
     {
         // Potentially generate a PowerUp
+        S.AddScore(100); //each ship 100 points for now
+
         if (Random.value <= e.powerUpDropChance)
         { // Underlined red for now  // c
           // Choose a PowerUp from the possibilities in powerUpFrequency
@@ -132,6 +138,20 @@ public class Main : MonoBehaviour
 
             // Set it to the position of the destroyed ship
             pUp.transform.position = e.transform.position;
+        }
+    }
+
+    public void AddScore(int points)
+    {
+        score += points;
+        UpdateScoreUI();
+    }
+
+    private void UpdateScoreUI()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = "Score: " + score.ToString();
         }
     }
 
