@@ -122,6 +122,7 @@ MonoBehaviour:
   health: 10
   score: 50
   powerUpDropChance: 1
+  explosionPrefab: {fileID: 5845089844079690838, guid: 787514995cb803149bf0b93a105f3c3d, type: 3}
 --- !u!114 &4413574950116602420
 MonoBehaviour:
   m_ObjectHideFlags: 0

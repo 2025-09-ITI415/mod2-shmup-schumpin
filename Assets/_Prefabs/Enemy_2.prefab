@@ -122,6 +122,7 @@ MonoBehaviour:
   health: 10
   score: 200
   powerUpDropChance: 1
+  explosionPrefab: {fileID: 5845089844079690838, guid: 787514995cb803149bf0b93a105f3c3d, type: 3}
   lifeTime: 10
   sinEccentricity: 0.6
   rotCurve:

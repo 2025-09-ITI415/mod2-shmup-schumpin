@@ -13,6 +13,9 @@ public class Enemy : MonoBehaviour
     public float health = 10;    // Damage needed to destroy this enemy
     public int score = 100;   // Points earned for destroying this
     public float powerUpDropChance = 1f;
+    public GameObject explosionPrefab; // Assign in Inspector
+
+
 
 
     // private BoundsCheck bndCheck;                                             // b
@@ -64,10 +67,10 @@ public class Enemy : MonoBehaviour
         // Check for collisions with ProjectileHero
         ProjectileHero p = otherGO.GetComponent<ProjectileHero>();
         if (p != null)
-        {                                                  
+        {
             // Only damage this Enemy if it’s on screen
             if (bndCheck.isOnScreen)
-            {                                      
+            {
                 // Get the damage amount from the Main WEAP_DICT.
                 health -= Main.GET_WEAPON_DEFINITION(p.type).damageOnHit;
                 if (health <= 0)
@@ -78,6 +81,7 @@ public class Enemy : MonoBehaviour
                         Main.SHIP_DESTROYED(this);
                     }
                     // Destroy this Enemy
+                    GameObject e = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
                     Destroy(this.gameObject);
                 }
             }
