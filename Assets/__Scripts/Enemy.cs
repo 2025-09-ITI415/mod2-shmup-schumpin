@@ -80,8 +80,9 @@ public class Enemy : MonoBehaviour
                         calledShipDestroyed = true;
                         Main.SHIP_DESTROYED(this);
                     }
-                    // Destroy this Enemy
+                    //particle and audio
                     GameObject e = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                    // Destroy this Enemy
                     Destroy(this.gameObject);
                 }
             }
