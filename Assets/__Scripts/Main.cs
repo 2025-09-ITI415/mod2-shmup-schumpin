@@ -122,7 +122,7 @@ public class Main : MonoBehaviour
     static public void SHIP_DESTROYED(Enemy e)
     {
         // Potentially generate a PowerUp
-        S.AddScore(100); //each ship 100 points for now
+        S.AddScore(e.score); //each ship 100 points for now
 
         if (Random.value <= e.powerUpDropChance)
         { // Underlined red for now  // c

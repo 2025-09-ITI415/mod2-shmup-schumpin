@@ -120,7 +120,8 @@ MonoBehaviour:
   speed: 10
   fireRate: 0.3
   health: 10
-  score: 100
+  score: 200
+  powerUpDropChance: 1
   lifeTime: 10
   sinEccentricity: 0.6
   rotCurve:
@@ -200,6 +201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showingColor: 0
   blinkCompleteTime: 0
+  ignoreOnCollisionEnter: 0
 --- !u!1001 &8705781302841839033
 PrefabInstance:
   m_ObjectHideFlags: 0
