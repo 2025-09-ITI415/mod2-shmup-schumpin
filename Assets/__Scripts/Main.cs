@@ -22,9 +22,15 @@ public class Main : MonoBehaviour
     public eWeaponType[] powerUpFrequency = new eWeaponType[] {
                                      eWeaponType.blaster, eWeaponType.blaster,
                                      eWeaponType.spread,  eWeaponType.shield };
+
+    // newly added content
     private BoundsCheck bndCheck;
     public Text scoreText; // Assign in Inspector
     private int score = 0; // current score
+
+    public Text timerText; // assign  in Inspector
+    private float elapsedTime = 0f;
+    private bool timerRunning = true;
 
 
     void Awake()
@@ -45,6 +51,26 @@ public class Main : MonoBehaviour
         }
 
     }
+
+    void Update()
+    {
+        if (timerRunning)
+        {
+            elapsedTime += Time.deltaTime;
+            UpdateTimerUI();
+        }
+    }
+
+    private void UpdateTimerUI()
+    {
+        if (timerText != null)
+        {
+            int minutes = Mathf.FloorToInt(elapsedTime / 60);
+            int seconds = Mathf.FloorToInt(elapsedTime % 60);
+            timerText.text = $"Time: {minutes:00}:{seconds:00}";
+        }
+    }
+
 
     public void SpawnEnemy()
     {
