@@ -527,7 +527,7 @@ GameObject:
   - component: {fileID: 930863984}
   m_Layer: 6
   m_Name: _hero
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -599,7 +599,14 @@ MonoBehaviour:
   - {fileID: 2103876059}
   - {fileID: 980067140}
   - {fileID: 781726980}
+  noHitBuffDelay: 3
+  normalBulletMultiplier: 1
+  buffedBulletMultiplier: 2
+  normalShieldDamage: 1
+  buffedShieldDamage: 0.5
   _shieldLevel: 1
+  isBuffed: 0
+  bulletDamageMultiplier: 1
 --- !u!114 &930863984
 MonoBehaviour:
   m_ObjectHideFlags: 0
