@@ -68,8 +68,18 @@ public class Enemy : MonoBehaviour
             // Only damage this Enemy if it’s on screen
             if (bndCheck.isOnScreen)
             {                                      
-                // Get the damage amount from the Main WEAP_DICT.
-                health -= Main.GET_WEAPON_DEFINITION(p.type).damageOnHit;
+                float baseDamage = Main.GET_WEAPON_DEFINITION(p.type).damageOnHit;
+
+                float finalDamage = baseDamage;
+
+                // Increase damage to enemy but heros buffed bullet Multiplier
+                if (Hero.S != null)
+                {
+                    finalDamage *= Hero.S.bulletDamageMultiplier;
+                }
+
+                health -= finalDamage;
+
                 if (health <= 0)
                 {
                     if (!calledShipDestroyed)

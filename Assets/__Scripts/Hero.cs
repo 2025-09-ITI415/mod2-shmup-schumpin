@@ -16,10 +16,21 @@ public class Hero : MonoBehaviour
     public float projectileSpeed = 40;
     public Weapon[] weapons;
 
+    public float noHitBuffDelay = 3f;        
+    public float normalBulletMultiplier = 1f;
+    public float buffedBulletMultiplier = 2f;
+    public float normalShieldDamage = 1f;
+    public float buffedShieldDamage = 0.5f;  
+
     [Header("Dynamic")]
     [Range(0, 4)]
     [SerializeField]                                        // b
     private float _shieldLevel = 1;
+
+    public bool isBuffed = false;
+    public float bulletDamageMultiplier = 1f;
+
+    private float timeSinceLastHit = 0f;
 
     [Tooltip("This field holds a reference to the last triggering GameObject")]
     private GameObject lastTriggerGo = null;
@@ -41,6 +52,10 @@ public class Hero : MonoBehaviour
             Debug.LogError("Hero.Awake() - Attempted to assign second Hero.S!");
         }
         //fireEvent += TempFire;
+
+        // Initialize multiplier and timer for buff
+        bulletDamageMultiplier = normalBulletMultiplier;
+        timeSinceLastHit = 0f;
 
         // Reset the weapons to start _Hero with 1 blaster
         ClearWeapons();
@@ -74,8 +89,41 @@ public class Hero : MonoBehaviour
             fireEvent();
         }
 
+        timeSinceLastHit += Time.deltaTime;
+
+        // When player is buffed and it has been more than 3 seconds activate buffs
+        if (!isBuffed && timeSinceLastHit >= noHitBuffDelay)
+        {
+            ApplyBuff();
+        }
+    }
+    
+    // This function changes all dynamic values to buff the player
+    void ApplyBuff()
+    {
+        isBuffed = true;
+        bulletDamageMultiplier = buffedBulletMultiplier;
+        
+        Debug.Log("Buff applied: stronger bullets and tougher shield!");
+    }
+    
+    // This function removes all buffs restoring to original values
+    void RemoveBuff()
+    {
+        isBuffed = false;
+        bulletDamageMultiplier = normalBulletMultiplier;
+        Debug.Log("Buff removed.");
     }
 
+    // This function counts the hit and resets time to recount for the next buff
+    void RegisterHit()
+    {
+        timeSinceLastHit = 0f;
+        if (isBuffed)
+        {
+            RemoveBuff();
+        }
+    }
 
     //void TempFire()
     //{
@@ -106,8 +154,14 @@ public class Hero : MonoBehaviour
 
         if (enemy != null)
         {  // If the shield was triggered by an enemy
-            shieldLevel--;        // Decrease the level of the shield by 1
-            Destroy(go);          // … and Destroy the enemy                  // f
+            // Register that the player got hit (resets timer and removes buff)
+            RegisterHit();
+
+            // Take less damage if buffed
+            float damage = isBuffed ? buffedShieldDamage : normalShieldDamage;
+            shieldLevel -= damage;
+
+            Destroy(go);  // … and Destroy the enemy
         }
         else if (pUp != null)
         {

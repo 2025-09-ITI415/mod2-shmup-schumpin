@@ -13,9 +13,12 @@ public class Shield : MonoBehaviour
     // This non-public variable will not appear in the Inspector
     Material mat;                                                             // a
 
+    private Vector3 originalScale;
+
     void Start()
     {
         mat = GetComponent<Renderer>().material;                              // b
+        originalScale = transform.localScale;
     }
 
     void Update()
@@ -28,6 +31,19 @@ public class Shield : MonoBehaviour
             levelShown = currLevel;
             // Adjust the texture offset to show different shield level
             mat.mainTextureOffset = new Vector2(0.2f * levelShown, 0);       // d
+        }
+
+        // When Hero is buffed shield turns gold SUPER size by 1.5x
+        if (Hero.S != null && Hero.S.isBuffed)
+        {
+            mat.color = new Color(1f, 0.85f, 0.25f);
+            transform.localScale = originalScale * 1.5f;
+        }
+        // Turn back to white if not buffed and reduce size to normal
+        else
+        {
+            mat.color = Color.green;
+            transform.localScale = originalScale;
         }
         // Rotate the shield a bit every frame in a time-based way
         float rZ = -(rotationsPerSecond * Time.time * 360) % 360f;               // e

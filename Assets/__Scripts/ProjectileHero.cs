@@ -35,6 +35,20 @@ public class ProjectileHero : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        // When hero is buffed change projectile to gold and increase size by 2x
+        if (Hero.S != null && Hero.S.isBuffed)
+        {
+            rend.material.color = new Color(1f, 0.85f, 0.25f); // GOLD
+            transform.localScale = Vector3.one *2f;
+        }
+        else
+        {
+            // Reset to the normal weapon color  and size
+            WeaponDefinition def = Main.GET_WEAPON_DEFINITION(_type);
+            rend.material.color = def.projectileColor;
+            transform.localScale = Vector3.one;
+        }
     }
 
     /// <summary>
